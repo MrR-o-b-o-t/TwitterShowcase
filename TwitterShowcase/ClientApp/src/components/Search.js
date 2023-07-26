@@ -8,18 +8,12 @@ const SearchPage = () => {
         setTwitterHandle(e.target.value);
     };
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
-        fetchTweets(twitterHandle);
-    };
-
-    const fetchTweets = async (twitterHandle) => {
         try {
             const response = await fetch(`/api/tweets/${twitterHandle}`);
             if (response.ok) {
-                const content = await response.text();
-                console.log('Response Content:', content); // Logging response
-                const data = JSON.parse(content);
+                const data = await response.json();
                 setTweets(data.data);
             } else {
                 console.error('Failed to fetch tweets:', response.statusText);
@@ -28,8 +22,6 @@ const SearchPage = () => {
             console.error('An error occurred while fetching tweets:', err);
         }
     };
-
-
 
     return (
         <div className="container mt-5">
@@ -56,6 +48,14 @@ const SearchPage = () => {
                     </div>
                 </div>
             </section>
+            <div>
+                {tweets.map((tweet) => (
+                    <div key={tweet.id}>
+                        <p>Name: {tweet.name}</p>
+                        <p>Username: {tweet.username}</p>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
