@@ -51,8 +51,9 @@ const SearchPage = () => {
             <div>
                 {tweets.map((tweet) => (
                     <div key={tweet.id}>
-                        <p>Name: {tweet.name}</p>
-                        <p>Username: {tweet.username}</p>
+                        <p>Author: {tweet.author_id}</p>
+                        <p>Tweet Text: {tweet.text}</p>
+                        <p>Created At: {tweet.created_at}</p>
                     </div>
                 ))}
             </div>

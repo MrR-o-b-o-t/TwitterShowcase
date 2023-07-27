@@ -16,7 +16,8 @@ namespace TwitterShowcase.Controllers
         public async Task<IActionResult> GetTweets(string twitterHandle)
         {
             string twitterBearerToken = "";
-            string apiUrl = $"https://api.twitter.com/2/users/by?usernames={twitterHandle}";
+            int maxResults = 50;
+            string apiUrl = $"https://api.twitter.com/2/tweets/search/recent?query=from:{twitterHandle}&tweet.fields=created_at,text,author_id&user.fields=username,name&media.fields=url&max_results={maxResults}";
 
             var httpClient = _httpClientFactory.CreateClient();
 
@@ -44,5 +45,7 @@ namespace TwitterShowcase.Controllers
                 Console.WriteLine(ex);
             }
         }
+
     }
 }
+
