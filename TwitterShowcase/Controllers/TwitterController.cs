@@ -17,7 +17,7 @@ namespace TwitterShowcase.Controllers
         {
             string twitterBearerToken = "";
             int maxResults = 50;
-            string apiUrl = $"https://api.twitter.com/2/tweets/search/recent?query=from:{twitterHandle}&tweet.fields=created_at,text,author_id&user.fields=username,name&media.fields=url&max_results={maxResults}";
+            string apiUrl = $"https://api.twitter.com/2/tweets/search/recent?query=from:{twitterHandle}&tweet.fields=created_at,text,author_id&user.fields=username,max_results={maxResults}";
 
             var httpClient = _httpClientFactory.CreateClient();
 
