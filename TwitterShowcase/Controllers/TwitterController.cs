@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace TwitterShowcase.Controllers
 {
@@ -15,24 +16,31 @@ namespace TwitterShowcase.Controllers
         [Route("api/tweets/{twitterHandle}")]
         public async Task<IActionResult> GetTweets(string twitterHandle)
         {
-            string twitterBearerToken = "";
-            int maxResults = 50;
-            string apiUrl = $"https://api.twitter.com/2/tweets/search/recent?query=from:{twitterHandle}&tweet.fields=created_at,text,author_id&user.fields=username,max_results={maxResults}";
+            string twitterBearerToken = "AAAAAAAAAAAAAAAAAAAAAPly9QAAAAAAtahFOyj9fF7vAAOrCWG3QstB5g4%3D9fPp6paT9e0sRAz4XbCBJPpDNdGJwIaD3EJ2ZpuZvYz13JgG6H";
+            string getUserApiUrl = $"https://api.twitter.com/2/users/by/username/{twitterHandle}";
 
             var httpClient = _httpClientFactory.CreateClient();
-
             httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {twitterBearerToken}");
 
             try
             {
-                var response = await httpClient.GetAsync(apiUrl);
-                Console.WriteLine(response);
-
-                if (response.IsSuccessStatusCode)
+                var getUserResponse = await httpClient.GetAsync(getUserApiUrl);
+                if (!getUserResponse.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
+                    return BadRequest("Failed to retrieve user information from Twitter API.");
+                }
 
-                    return Content(content, "application/json");
+                var userContent = await getUserResponse.Content.ReadAsStringAsync();
+                var userData = JsonConvert.DeserializeObject<dynamic>(userContent);
+                string userId = userData.data.id;
+
+                string apiUrl = $"https://api.twitter.com/2/users/{userId}/tweets?tweet.fields=created_at,text,author_id,public_metrics&media.fields=url";
+
+                var getTweetsResponse = await httpClient.GetAsync(apiUrl);
+                if (getTweetsResponse.IsSuccessStatusCode)
+                {
+                    var tweetsContent = await getTweetsResponse.Content.ReadAsStringAsync();
+                    return Content(tweetsContent, "application/json");
                 }
                 else
                 {
@@ -45,7 +53,5 @@ namespace TwitterShowcase.Controllers
                 Console.WriteLine(ex);
             }
         }
-
     }
 }
-

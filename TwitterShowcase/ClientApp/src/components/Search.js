@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import TweetCard from './TweetCards/TweetCard';
 
 const SearchPage = () => {
     const [twitterHandle, setTwitterHandle] = useState('');
@@ -21,43 +23,36 @@ const SearchPage = () => {
         } catch (err) {
             console.error('An error occurred while fetching tweets:', err);
         }
+        setTwitterHandle('');
     };
 
     return (
-        <div className="container mt-5">
+        <Container className="mt-5 fluid mb-5">
             <header className="text-center">
-                <h1>Search Twitter</h1>
+                <h1 className="text-3xl font-bold">Search Twitter</h1>
             </header>
             <section className="mt-4">
-                <div className="row">
-                    <div className="col-md-6 offset-md-3 col-sm-8 offset-sm-2">
-                        <form onSubmit={handleFormSubmit}>
-                            <div className="input-group mb-3">
-                                <input
+                <Row className="justify-content-center">
+                    <Col xs={12} sm={8} md={6}>
+                        <Form onSubmit={handleFormSubmit}>
+                            <Form.Group className="mb-3 d-flex">
+                                <Form.Control
                                     type="text"
-                                    className="form-control"
                                     placeholder="Enter Twitter Handle"
                                     value={twitterHandle}
                                     onChange={handleInputChange}
+                                    className="flex-grow-1 mr-2"
                                 />
-                                <button className="btn btn-primary" type="submit">
+                                <Button className="mx-1" variant="primary" type="submit">
                                     Search
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                                </Button>
+                            </Form.Group>
+                        </Form>
+                    </Col>
+                </Row>
             </section>
-            <div>
-                {tweets.map((tweet) => (
-                    <div key={tweet.id}>
-                        <p>Author: {tweet.author_id}</p>
-                        <p>Tweet Text: {tweet.text}</p>
-                        <p>Created At: {tweet.created_at}</p>
-                    </div>
-                ))}
-            </div>
-        </div>
+            {tweets.length > 0 && <TweetCard tweets={tweets} />}
+        </Container>
     );
 };
 
