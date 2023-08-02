@@ -1,0 +1,38 @@
+.card {
+    background-color: black;
+    color: white;
+}
+
+.tweet-cards i {
+    color: red;
+}
+
+.tweet-card-image {
+}
+
+.card-link:hover {
+    text-decoration: none !important;
+}
+
+.like-container {
+    fill: grey;
+    color: grey;
+}
+
+    .like-container:hover {
+        fill: pink;
+        color: pink;
+        cursor: default;
+    }
+
+
+.retweet-container {
+    fill: grey;
+    color: grey;
+}
+
+    .retweet-container:hover {
+        fill: green;
+        color: green;
+        cursor: default;
+    }

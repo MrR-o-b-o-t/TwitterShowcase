@@ -27,6 +27,11 @@ const NavMenu = () => {
                             Search
                         </NavLink>
                     </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} to="/random" onClick={toggleNavbar}>
+                            Random
+                        </NavLink>
+                    </NavItem>
                 </Nav>
             </Collapse>
         </Navbar>

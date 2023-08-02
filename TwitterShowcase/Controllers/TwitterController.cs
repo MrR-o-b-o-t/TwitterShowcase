@@ -34,7 +34,7 @@ namespace TwitterShowcase.Controllers
                 var userData = JsonConvert.DeserializeObject<dynamic>(userContent);
                 string userId = userData.data.id;
 
-                string apiUrl = $"https://api.twitter.com/2/users/{userId}/tweets?tweet.fields=created_at,text,author_id,public_metrics&media.fields=url";
+                string apiUrl = $"https://api.twitter.com/2/users/{userId}/tweets?tweet.fields=created_at,text,author_id,public_metrics,attachments&expansions=attachments.media_keys&media.fields=url&exclude=replies,retweets";
 
                 var getTweetsResponse = await httpClient.GetAsync(apiUrl);
                 if (getTweetsResponse.IsSuccessStatusCode)

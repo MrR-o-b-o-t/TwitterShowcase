@@ -4,7 +4,9 @@ import TweetCard from './TweetCards/TweetCard';
 
 const SearchPage = () => {
     const [twitterHandle, setTwitterHandle] = useState('');
+    const [userHandleInput, setUserHandleInput] = useState('');
     const [tweets, setTweets] = useState([]);
+    const [includes, setIncludes] = useState(null);
 
     const handleInputChange = (e) => {
         setTwitterHandle(e.target.value);
@@ -17,12 +19,14 @@ const SearchPage = () => {
             if (response.ok) {
                 const data = await response.json();
                 setTweets(data.data);
+                setIncludes(data.includes);
             } else {
                 console.error('Failed to fetch tweets:', response.statusText);
             }
         } catch (err) {
             console.error('An error occurred while fetching tweets:', err);
         }
+        setUserHandleInput(twitterHandle);
         setTwitterHandle('');
     };
 
@@ -51,7 +55,7 @@ const SearchPage = () => {
                     </Col>
                 </Row>
             </section>
-            {tweets.length > 0 && <TweetCard tweets={tweets} />}
+            {tweets.length > 0 && <TweetCard tweets={tweets} includes={includes} userHandleInput={userHandleInput} />}
         </Container>
     );
 };

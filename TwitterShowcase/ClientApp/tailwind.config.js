@@ -1,8 +1,6 @@
-// tailwind.config.js
-
 module.exports = {
     purge: [],
-    darkMode: 'class', // Enable dark mode support using a CSS class
+    darkMode: 'class',
     theme: {
         extend: {},
     },
