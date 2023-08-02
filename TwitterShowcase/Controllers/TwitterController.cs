@@ -16,7 +16,7 @@ namespace TwitterShowcase.Controllers
         [Route("api/tweets/{twitterHandle}")]
         public async Task<IActionResult> GetTweets(string twitterHandle)
         {
-            string twitterBearerToken = "AAAAAAAAAAAAAAAAAAAAAPly9QAAAAAAtahFOyj9fF7vAAOrCWG3QstB5g4%3D9fPp6paT9e0sRAz4XbCBJPpDNdGJwIaD3EJ2ZpuZvYz13JgG6H";
+            string twitterBearerToken = "";
             string getUserApiUrl = $"https://api.twitter.com/2/users/by/username/{twitterHandle}";
 
             var httpClient = _httpClientFactory.CreateClient();
