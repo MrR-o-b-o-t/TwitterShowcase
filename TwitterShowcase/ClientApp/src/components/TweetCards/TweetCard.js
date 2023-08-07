@@ -6,7 +6,7 @@ import { FaRetweet } from 'react-icons/fa';
 
 const TweetCard = ({ tweets, includes, userHandleInput }) => {
     return (
-        <Row className="" xs={1} md={1} lg={1} className="g-4">
+        <Row className="" xs={1} md={1} lg={1} className="g-3">
             {tweets.map((tweet) => (
                 <Col key={tweet.id}>
                     <Card style={{ width: '40rem' }}>
